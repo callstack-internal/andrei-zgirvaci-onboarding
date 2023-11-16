@@ -1,17 +1,22 @@
 import React from 'react';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { UnistylesTheme } from 'react-native-unistyles';
 
 import Navigator from '@/app/navigation';
 import { theme } from '@/constants/theme';
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <UnistylesTheme theme={theme}>
-      <SafeAreaProvider>
-        <Navigator />
-      </SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <Navigator />
+        </SafeAreaProvider>
+      </QueryClientProvider>
     </UnistylesTheme>
   );
 }

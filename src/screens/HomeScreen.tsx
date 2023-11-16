@@ -1,127 +1,90 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlashList } from '@shopify/flash-list';
+import { useQuery } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react-native';
-import FastImage from 'react-native-fast-image';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { RootStackParamList } from '@/app/navigation';
+import CityWeather from '@/components/CityWeather';
+import Separator from '@/components/Separator';
 import cities from '@/constants/cities';
 import { createStyleSheet, useStyles } from '@/constants/styles';
+import { CityWeatherData, fetchWeatherDataForCities } from '@/lib/weather';
 
-type WeatherItem = {
-  id: string;
-  iconName: string;
-  cityName: string;
-  description: string;
-  temperature: number;
-};
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = Props['navigation'];
 
-const DATA: WeatherItem[] = [
-  {
-    id: '1',
-    iconName: '10d',
-    cityName: 'New York',
-    description: 'Raining',
-    temperature: 55.2,
-  },
-];
+export default function HomeScreen() {
+  const { styles, theme } = useStyles(stylesheet);
 
-function HomeScreen() {
-  // const { styles } = useStyles(stylesheet);
+  const insets = useSafeAreaInsets();
 
-  const renderItem = React.useCallback((props: { item: WeatherItem }) => {
+  const {
+    data: citiesWeatherData,
+    isPending,
+    refetch,
+  } = useQuery({
+    queryKey: ['weather_data', 'all_cities'],
+    queryFn: () => fetchWeatherDataForCities(cities),
+  });
+
+  const renderItem = React.useCallback((props: { item: CityWeatherData }) => {
     return <WeatherListItem {...props} />;
   }, []);
 
+  if (isPending) {
+    return <Text style={theme.components.centerText}>Loading...</Text>;
+  }
+
   return (
-    <FlatList
-      data={DATA}
+    <FlashList
+      contentContainerStyle={styles.weatherListContentContainer(insets)}
+      data={citiesWeatherData}
+      refreshing={isPending}
+      onRefresh={refetch}
       renderItem={renderItem}
-      ItemSeparatorComponent={ListItemSeparator}
+      ItemSeparatorComponent={Separator}
+      ListEmptyComponent={EmptyListComponent}
+      estimatedItemSize={70}
     />
   );
 }
 
-function WeatherListItem({
-  item: { iconName: iconName, cityName, description, temperature },
-}: {
-  item: WeatherItem;
-}) {
+function EmptyListComponent() {
+  const { theme } = useStyles(stylesheet);
+
+  return <Text style={theme.components.errorMessage}>No weather data</Text>;
+}
+
+function WeatherListItem({ item }: { item: CityWeatherData }) {
   const { styles } = useStyles(stylesheet);
 
-  const weatherImageUrl = `https://openweathermap.org/img/wn/${iconName}@2x.png`;
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   return (
-    <View style={styles.weatherContainer}>
-      <FastImage
-        style={styles.weatherIcon}
-        source={{
-          uri: weatherImageUrl,
-        }}
-        resizeMode={FastImage.resizeMode.contain}
-      />
-
-      <View>
-        <Text style={styles.weatherCityName}>{cityName}</Text>
-        <Text style={styles.weatherDescription}>{description}</Text>
-      </View>
-
-      <View style={styles.weatherTemperatureContainer}>
-        <Text>{temperature} °F</Text>
-      </View>
+    <Pressable
+      style={styles.weatherListItemContainer}
+      onPress={() => navigation.navigate('Details', { cityId: item.cityId })}
+    >
+      <CityWeather {...item} />
 
       <ChevronRight color="lightgray" size={30} />
-    </View>
+    </Pressable>
   );
 }
 
-function ListItemSeparator() {
-  const { styles } = useStyles(stylesheet);
-
-  return <View style={styles.listItemSeparator} />;
-}
-
-export default HomeScreen;
-
 const stylesheet = createStyleSheet((theme) => ({
-  // container: {
-  //   ...theme.components.container,
-  //   paddingTop: 40,
-  //   paddingBottom: 20,
-  //   paddingHorizontal: 20,
-  // },
-  listItemSeparator: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: 'gainsboro',
-  },
-  // Weather List Item
-  weatherContainer: {
-    flex: 1,
+  weatherListContentContainer: (insets: EdgeInsets) => ({
+    paddingBottom: insets.bottom,
+  }),
+  weatherListItemContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  weatherIcon: {
-    height: '100%',
-    aspectRatio: 1,
-    marginRight: 5,
-  },
-  weatherCityName: {
-    fontSize: 18,
-  },
-  weatherDescription: {
-    fontSize: 16,
-    fontWeight: '600',
-    opacity: 0.4,
-  },
-  weatherTemperatureContainer: {
-    marginLeft: 'auto',
-    marginRight: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    backgroundColor: 'gainsboro',
+    paddingHorizontal: theme.safeMargins.horizontal,
   },
 }));

@@ -6,7 +6,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DetailsScreen from '@/screens/DetailsScreen';
 import HomeScreen from '@/screens/HomeScreen';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  Details: { cityId: number };
+};
+
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const MyTheme = {
   ...DefaultTheme,
@@ -19,14 +24,14 @@ const MyTheme = {
 function Navigator() {
   return (
     <NavigationContainer theme={MyTheme}>
-      <Stack.Navigator>
-        <Stack.Screen
+      <RootStack.Navigator>
+        <RootStack.Screen
           name="Home"
           component={HomeScreen}
           options={{ title: 'Weather' }}
         />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
+        <RootStack.Screen name="Details" component={DetailsScreen} />
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }
