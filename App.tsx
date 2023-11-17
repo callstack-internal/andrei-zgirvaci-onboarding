@@ -7,7 +7,13 @@ import { UnistylesTheme } from 'react-native-unistyles';
 import Navigator from '@/app/navigation';
 import { theme } from '@/constants/theme';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 20,
+    },
+  },
+});
 
 function App() {
   return (

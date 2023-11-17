@@ -8,8 +8,9 @@ import { useQuery } from '@tanstack/react-query';
 import { RootStackParamList } from '@/app/navigation';
 import CityWeather from '@/components/CityWeather';
 import Separator from '@/components/Separator';
+import cities from '@/constants/cities';
 import { createStyleSheet, useStyles } from '@/constants/styles';
-import { fetchWeatherDataForCity } from '@/lib/weather';
+import { fetchWeatherDataForCities } from '@/lib/weather';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 type DetailsScreenRouteProp = Props['route'];
@@ -22,8 +23,12 @@ export default function DetailsScreen() {
   const { cityId } = route.params;
 
   const { data: detailedCityWeatherData, isPending } = useQuery({
-    queryKey: ['weather_data', 'city', cityId],
-    queryFn: () => fetchWeatherDataForCity(cityId),
+    queryKey: ['weather_data', 'all_cities'],
+    queryFn: () => fetchWeatherDataForCities(cities),
+    select: (citiesWeatherData) =>
+      citiesWeatherData.find(
+        (cityWeatherData) => cityWeatherData.cityId === cityId
+      ),
   });
 
   if (isPending) {
