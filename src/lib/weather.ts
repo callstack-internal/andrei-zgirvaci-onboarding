@@ -1,3 +1,4 @@
+import Config from 'react-native-config';
 import axios from 'redaxios';
 import invariant from 'tiny-invariant';
 
@@ -13,8 +14,6 @@ export type CityWeatherData = {
   cloudCover: number;
 };
 
-const OPEN_WEATHER_API_KEY = 'a7d6ffec554893c131a6b88837279568';
-
 const client = axios.create({
   baseURL: 'https://api.openweathermap.org/',
   headers: {
@@ -26,7 +25,7 @@ export async function fetchWeatherDataForCities(cities: number[]) {
   const response = await client.get('data/2.5/group', {
     params: {
       id: cities.join(','),
-      appid: OPEN_WEATHER_API_KEY,
+      appid: Config.OPEN_WEATHER_API_KEY,
     },
   });
 
