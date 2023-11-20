@@ -15,14 +15,14 @@ export type CityWeatherData = {
 };
 
 const client = axios.create({
-  baseURL: 'https://api.openweathermap.org/',
+  baseURL: Config.OPEN_WEATHER_API_BASE_URL,
   headers: {
     'content-type': 'application/json',
   },
 });
 
 export async function fetchWeatherDataForCities(cities: number[]) {
-  const response = await client.get('data/2.5/group', {
+  const response = await client.get('/data/2.5/group', {
     params: {
       id: cities.join(','),
       appid: Config.OPEN_WEATHER_API_KEY,
