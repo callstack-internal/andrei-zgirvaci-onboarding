@@ -1,8 +1,10 @@
 import '@testing-library/react-native/extend-expect';
 
-import { server } from './mocks/server';
+import { server } from './server';
 
 beforeAll(() => server.listen());
+
+beforeEach(() => jest.useFakeTimers());
 
 afterEach(() => server.resetHandlers());
 
