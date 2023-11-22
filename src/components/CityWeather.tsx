@@ -24,6 +24,7 @@ export default function CityWeather({
           uri: weatherIconUrl,
         }}
         resizeMode={FastImage.resizeMode.contain}
+        testID="weather-icon"
       />
 
       <View>

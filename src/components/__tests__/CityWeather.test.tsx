@@ -11,7 +11,7 @@ describe('<CityWeather />', () => {
       cityId: 703448,
       cityName: 'Kyiv',
       weatherCondition: 'Rainy',
-      temperature: 100.12,
+      temperature: 10.12,
       weatherIconName: '01d',
       humidity: 45,
       pressure: 2031,
@@ -21,7 +21,11 @@ describe('<CityWeather />', () => {
 
     render(<CityWeather {...props} />);
 
+    const img = screen.getByTestId('weather-icon');
+
     expect(screen.getByText('Kyiv')).toBeOnTheScreen();
     expect(screen.getByText('Rainy')).toBeOnTheScreen();
+    expect(screen.getByText('10.12 °C')).toBeOnTheScreen();
+    expect(img.props.source.uri).toContain(props.weatherIconName);
   });
 });
