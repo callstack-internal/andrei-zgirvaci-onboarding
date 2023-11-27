@@ -77,6 +77,7 @@ function WeatherListItem({ item }: { item: CityWeatherData }) {
     <Pressable
       style={styles.weatherListItemContainer}
       onPress={() => navigation.navigate('Details', { cityId: item.cityId })}
+      testID={`weather-list-item-${item.cityName}`}
     >
       <CityWeather {...item} />
 

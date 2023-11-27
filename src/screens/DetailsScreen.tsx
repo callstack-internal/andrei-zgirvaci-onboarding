@@ -55,7 +55,7 @@ export default function DetailsScreen() {
         <Text style={styles.weatherDetailsName}>Humidity</Text>
 
         <Text style={styles.weatherDetailsValue}>
-          {detailedCityWeatherData?.humidity} %
+          {detailedCityWeatherData.humidity} %
         </Text>
       </View>
 
@@ -65,7 +65,7 @@ export default function DetailsScreen() {
         <Text style={styles.weatherDetailsName}>Pressure</Text>
 
         <Text style={styles.weatherDetailsValue}>
-          {detailedCityWeatherData?.pressure} hPa
+          {detailedCityWeatherData.pressure} hPa
         </Text>
       </View>
 
@@ -75,7 +75,7 @@ export default function DetailsScreen() {
         <Text style={styles.weatherDetailsName}>Wind Speed</Text>
 
         <Text style={styles.weatherDetailsValue}>
-          {detailedCityWeatherData?.windSpeed} mph
+          {detailedCityWeatherData.windSpeed} mph
         </Text>
       </View>
 
@@ -85,7 +85,7 @@ export default function DetailsScreen() {
         <Text style={styles.weatherDetailsName}>Cloud Cover</Text>
 
         <Text style={styles.weatherDetailsValue}>
-          {detailedCityWeatherData?.cloudCover} %
+          {detailedCityWeatherData.cloudCover} %
         </Text>
       </View>
     </View>

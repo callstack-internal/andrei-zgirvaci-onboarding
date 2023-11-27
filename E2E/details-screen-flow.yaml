@@ -1,0 +1,9 @@
+appId: org.reactjs.native.example.AndreiZgirvaciOnboarding
+---
+- assertVisible: 'Details'
+
+- assertVisible: 'Kyiv'
+- assertVisible: 'Humidity'
+- assertVisible: 'Pressure'
+- assertVisible: 'Wind Speed'
+- assertVisible: 'Cloud Cover'

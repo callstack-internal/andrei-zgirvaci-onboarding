@@ -1,0 +1,12 @@
+appId: org.reactjs.native.example.AndreiZgirvaciOnboarding
+---
+- assertVisible: 'Weather'
+
+- assertVisible:
+    id: 'weather-list-item-Kyiv'
+- assertVisible: 'Kyiv'
+
+- scrollUntilVisible:
+  element:
+    id: 'weather-list-item-New York'
+- assertVisible: 'New York'
