@@ -8,7 +8,11 @@ import { UnistylesTheme } from 'react-native-unistyles';
 
 import { theme } from '@/constants/theme';
 
-export function renderScreen(component: React.ComponentType, name: string) {
+export function renderScreen(
+  component: React.ComponentType,
+  name: string,
+  initialParams: {} | undefined = undefined
+) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -24,7 +28,11 @@ export function renderScreen(component: React.ComponentType, name: string) {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name={name} component={component} />
+            <Stack.Screen
+              name={name}
+              component={component}
+              initialParams={initialParams}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </QueryClientProvider>

@@ -33,7 +33,7 @@ export default function CityWeather({
       </View>
 
       <View style={styles.weatherTemperatureContainer}>
-        <Text>{temperature} °F</Text>
+        <Text>{temperature} °C</Text>
       </View>
     </View>
   );

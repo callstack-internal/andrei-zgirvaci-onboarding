@@ -19,35 +19,38 @@ const client = axios.create({
   headers: {
     'content-type': 'application/json',
   },
+  params: {
+    appid: Config.OPEN_WEATHER_API_KEY,
+  },
 });
 
 export async function fetchWeatherDataForCities(cities: number[]) {
   const response = await client.get('/data/2.5/group', {
     params: {
       id: cities.join(','),
-      appid: Config.OPEN_WEATHER_API_KEY,
+      units: 'metric',
     },
   });
 
   invariant(response.data.list != null, "Couldn't fetch data from OpenWeather");
 
-  const citiesWeatherData: CityWeatherData[] = [];
-
-  response.data.list.forEach((item: any) => {
-    const cityWeatherData = {
-      cityId: item.id,
-      cityName: item.name,
-      weatherCondition: item.weather[0].main,
-      temperature: item.main.temp,
-      weatherIconName: item.weather[0].icon,
-      humidity: item.main.humidity,
-      pressure: item.main.pressure,
-      windSpeed: item.wind.speed,
-      cloudCover: item.clouds.all,
-    };
-
-    citiesWeatherData.push(cityWeatherData);
-  });
+  const citiesWeatherData: CityWeatherData[] = response.data.list.map(
+    normalizeRawWeatherData
+  );
 
   return citiesWeatherData;
+}
+
+export function normalizeRawWeatherData(data: any): CityWeatherData {
+  return {
+    cityId: data.id,
+    cityName: data.name,
+    weatherCondition: data.weather[0].main,
+    temperature: data.main.temp,
+    weatherIconName: data.weather[0].icon,
+    humidity: data.main.humidity,
+    pressure: data.main.pressure,
+    windSpeed: data.wind.speed,
+    cloudCover: data.clouds.all,
+  };
 }

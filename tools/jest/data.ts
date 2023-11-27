@@ -1,4 +1,18 @@
-export const SUCCESS_WEATHER_DATA = {
+import { CityWeatherData } from '@/lib/weather';
+
+export const NORMALIZED_WEATHER_DATA: CityWeatherData = {
+  cityId: 703448,
+  cityName: 'Kyiv',
+  weatherCondition: 'Clouds',
+  temperature: -2.98,
+  weatherIconName: '04n',
+  humidity: 83,
+  pressure: 1022,
+  windSpeed: 2.88,
+  cloudCover: 96,
+};
+
+export const RAW_WEATHER_DATA = {
   cnt: 11,
   list: [
     {

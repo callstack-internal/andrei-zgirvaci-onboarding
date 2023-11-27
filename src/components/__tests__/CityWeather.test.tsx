@@ -3,29 +3,27 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 import CityWeather from '@/components/CityWeather';
-import { CityWeatherData } from '@/lib/weather';
+import { NORMALIZED_WEATHER_DATA } from '@/tools/jest/data';
 
 describe('<CityWeather />', () => {
-  it('renders correctly', () => {
-    const props: CityWeatherData = {
-      cityId: 703448,
-      cityName: 'Kyiv',
-      weatherCondition: 'Rainy',
-      temperature: 10.12,
-      weatherIconName: '01d',
-      humidity: 45,
-      pressure: 2031,
-      windSpeed: 5.1,
-      cloudCover: 3.1,
-    };
+  test('should display the weather data', () => {
+    render(<CityWeather {...NORMALIZED_WEATHER_DATA} />);
 
-    render(<CityWeather {...props} />);
+    expect(
+      screen.getByText(NORMALIZED_WEATHER_DATA.cityName)
+    ).toBeOnTheScreen();
 
-    const img = screen.getByTestId('weather-icon');
+    expect(
+      screen.getByText(NORMALIZED_WEATHER_DATA.weatherCondition)
+    ).toBeOnTheScreen();
 
-    expect(screen.getByText('Kyiv')).toBeOnTheScreen();
-    expect(screen.getByText('Rainy')).toBeOnTheScreen();
-    expect(screen.getByText('10.12 °C')).toBeOnTheScreen();
-    expect(img.props.source.uri).toContain(props.weatherIconName);
+    expect(
+      screen.getByText(`${NORMALIZED_WEATHER_DATA.temperature} °C`)
+    ).toBeOnTheScreen();
+
+    const weatherIcon = screen.getByTestId('weather-icon');
+    expect(weatherIcon.props.source.uri).toContain(
+      NORMALIZED_WEATHER_DATA.weatherIconName
+    );
   });
 });
