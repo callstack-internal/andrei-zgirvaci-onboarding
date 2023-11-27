@@ -40,6 +40,14 @@ export default function HomeScreen() {
     return <Text style={theme.components.centerText}>Loading...</Text>;
   }
 
+  if (citiesWeatherData == null) {
+    return (
+      <Text style={theme.components.errorMessage}>
+        Sorry, couldn't get weather data. Try again.
+      </Text>
+    );
+  }
+
   return (
     <FlashList
       contentContainerStyle={styles.weatherListContentContainer(insets)}

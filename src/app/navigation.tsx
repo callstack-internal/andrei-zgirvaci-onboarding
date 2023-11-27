@@ -11,7 +11,7 @@ export type RootStackParamList = {
   Details: { cityId: number };
 };
 
-const RootStack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const MyTheme = {
   ...DefaultTheme,
@@ -21,19 +21,17 @@ const MyTheme = {
   },
 };
 
-function Navigator() {
+export default function RootStack() {
   return (
     <NavigationContainer theme={MyTheme}>
-      <RootStack.Navigator>
-        <RootStack.Screen
+      <Stack.Navigator>
+        <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{ title: 'Weather' }}
         />
-        <RootStack.Screen name="Details" component={DetailsScreen} />
-      </RootStack.Navigator>
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-export default Navigator;

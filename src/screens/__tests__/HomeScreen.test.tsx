@@ -7,12 +7,12 @@ import {
   setupFailedRequestHandler,
   setupSucceededRequestHandler,
 } from '@/tools/jest/handlers';
-import { renderScreen } from '@/tools/jest/render';
+import { renderScreen } from '@/tools/jest/utils';
 
 import HomeScreen from '../HomeScreen';
 
 describe('<HomeScreen />', () => {
-  it('it should render the entire list of cities', async () => {
+  test('should display the entire list of cities', async () => {
     setupSucceededRequestHandler();
 
     renderScreen(HomeScreen, 'HomeScreen');
@@ -21,7 +21,7 @@ describe('<HomeScreen />', () => {
     expect(weatherIcons.length).toBe(cities.length);
   });
 
-  it('it should render and empty list of cities', async () => {
+  test('should display an error message when weather data is empty', async () => {
     setupEmptyDataHandler();
 
     renderScreen(HomeScreen, 'HomeScreen');
@@ -30,7 +30,7 @@ describe('<HomeScreen />', () => {
     expect(errorMessage).toBeOnTheScreen();
   });
 
-  it('it should display an error message when weather data is wrong', async () => {
+  test('should display an error message when weather data is wrong', async () => {
     setupFailedRequestHandler();
 
     renderScreen(HomeScreen, 'HomeScreen');
@@ -41,7 +41,7 @@ describe('<HomeScreen />', () => {
     expect(errorMessage).toBeOnTheScreen();
   });
 
-  it('it should display an error message when weather data fails to fetch', async () => {
+  test('should display an error message when weather data fails to fetch', async () => {
     setupFailedNetworkHandler();
 
     renderScreen(HomeScreen, 'HomeScreen');
