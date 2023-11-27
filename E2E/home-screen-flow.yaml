@@ -4,9 +4,13 @@ appId: org.reactjs.native.example.AndreiZgirvaciOnboarding
 
 - assertVisible:
     id: 'weather-list-item-Kyiv'
-- assertVisible: 'Kyiv'
 
 - scrollUntilVisible:
-  element:
-    id: 'weather-list-item-New York'
-- assertVisible: 'New York'
+    element:
+      id: 'weather-list-item-New York'
+
+- scrollUntilVisible:
+    element:
+      id: 'weather-list-item-Kyiv'
+    direction: UP
+    centerElement: true

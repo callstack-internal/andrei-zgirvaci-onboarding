@@ -13,8 +13,7 @@ appId: org.reactjs.native.example.AndreiZgirvaciOnboarding
     when:
       platform: iOS
     commands:
-      - swipe:
-        direction: LEFT
+      - tapOn: 'Weather'
 - runFlow:
     when:
       platform: Android
