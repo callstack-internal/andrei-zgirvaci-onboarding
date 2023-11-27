@@ -1,0 +1,24 @@
+appId: org.reactjs.native.example.AndreiZgirvaciOnboarding
+---
+- launchApp
+
+- runFlow: ./home-screen-flow.yaml
+
+- tapOn:
+    id: 'weather-list-item-Kyiv'
+
+- runFlow: ./details-screen-flow.yaml
+
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - swipe:
+        direction: LEFT
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+
+- runFlow: ./home-screen-flow.yaml
