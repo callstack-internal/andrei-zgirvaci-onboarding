@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
+import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
-import { createStyleSheet, useStyles } from '@/constants/styles';
 import { CityWeatherData } from '@/lib/weather';
 
 export default function CityWeather({

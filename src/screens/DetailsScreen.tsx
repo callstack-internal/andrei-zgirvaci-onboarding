@@ -4,12 +4,12 @@ import { Text, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from '@tanstack/react-query';
+import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { RootStackParamList } from '@/app/navigation';
 import CityWeather from '@/components/CityWeather';
 import Separator from '@/components/Separator';
 import cities from '@/constants/cities';
-import { createStyleSheet, useStyles } from '@/constants/styles';
 import { fetchWeatherDataForCities } from '@/lib/weather';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;

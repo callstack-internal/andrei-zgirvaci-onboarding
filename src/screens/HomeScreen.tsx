@@ -7,12 +7,12 @@ import { FlashList } from '@shopify/flash-list';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { RootStackParamList } from '@/app/navigation';
 import CityWeather from '@/components/CityWeather';
 import Separator from '@/components/Separator';
 import cities from '@/constants/cities';
-import { createStyleSheet, useStyles } from '@/constants/styles';
 import { CityWeatherData, fetchWeatherDataForCities } from '@/lib/weather';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;

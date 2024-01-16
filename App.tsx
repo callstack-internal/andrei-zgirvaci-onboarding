@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { UnistylesTheme } from 'react-native-unistyles';
 
 import RootStack from '@/app/navigation';
-import { theme } from '@/constants/theme';
+
+import '@/app/unistyles';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,11 +16,9 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <UnistylesTheme theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <RootStack />
-      </QueryClientProvider>
-    </UnistylesTheme>
+    <QueryClientProvider client={queryClient}>
+      <RootStack />
+    </QueryClientProvider>
   );
 }
 
